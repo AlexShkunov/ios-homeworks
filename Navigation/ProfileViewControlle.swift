@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ProfileViewControlle.swift
 //  Navigation
 //
 //  Created by Alex Shkunov on 4/16/23.
@@ -7,13 +7,9 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class ProfileViewControlle: UIViewController {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
-
-
 }
-
