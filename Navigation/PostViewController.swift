@@ -16,11 +16,9 @@ class PostViewController: UIViewController {
         view.backgroundColor = UIColor.systemGray5
         title = titlePost
         
-        
         let barButtonItem = UIBarButtonItem(image: UIImage(named: "plus"), style: .plain, target: self, action: #selector(barButtonShow))
         navigationItem.setRightBarButton(barButtonItem, animated: true)
     }
-    
     
     @objc func barButtonShow() {
         let infoViewController = InfoViewController()
