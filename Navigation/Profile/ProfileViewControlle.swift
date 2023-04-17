@@ -13,10 +13,9 @@ class ProfileViewControlle: UIViewController {
     
     private lazy var setNewTitleButtom: UIButton = {
         var setNewTitleButtom = UIButton()
-        setNewTitleButtom.setTitle("New title", for: .normal)
+        setNewTitleButtom.setTitle("Change title", for: .normal)
         setNewTitleButtom.setTitleColor(.white, for: .normal)
         setNewTitleButtom.backgroundColor = .blue
-        setNewTitleButtom.addTarget(self, action: #selector(changeTitle), for: .touchUpInside)
         setNewTitleButtom.translatesAutoresizingMaskIntoConstraints = false
         return setNewTitleButtom
     }()
@@ -56,21 +55,5 @@ class ProfileViewControlle: UIViewController {
             setNewTitleButtom.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             setNewTitleButtom.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
-    }
-    
-    @objc func changeTitle() {
-        
-        let alertController = UIAlertController(title: "New title", message: nil, preferredStyle: .alert)
-        alertController.addTextField() { (textField) in
-            textField.placeholder = "Title"
-        }
-        let confirmAction = UIAlertAction(title: "Confirm", style: .default) { [weak alertController] _ in
-            guard let textFields = alertController?.textFields else { return }
-            if let titleText = textFields[0].text {
-                self.title = titleText
-            }
-        }
-        alertController.addAction(confirmAction)
-        self.present(alertController, animated: true)
     }
 }

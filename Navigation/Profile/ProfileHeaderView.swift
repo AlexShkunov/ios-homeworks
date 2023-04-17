@@ -12,6 +12,10 @@ class ProfileHeaderView: UIView {
     private let userAvatar: UIImageView = {
         let image = UIImage(named: "profilePhoto")
         let userAvatar = UIImageView(image: image)
+        userAvatar.layer.cornerRadius = 48
+        userAvatar.clipsToBounds = true
+        userAvatar.layer.borderColor = UIColor.white.cgColor
+        userAvatar.layer.borderWidth = 3
         userAvatar.translatesAutoresizingMaskIntoConstraints = false
         return userAvatar
     }()
@@ -42,6 +46,13 @@ class ProfileHeaderView: UIView {
         userButtom.setTitleColor(.white, for: .normal)
         userButtom.backgroundColor = .blue
         userButtom.addTarget(self, action: #selector(showStatus), for: .touchUpInside)
+        userButtom.layer.cornerRadius = 4
+        userButtom.clipsToBounds = true
+        userButtom.layer.masksToBounds = false
+        userButtom.layer.shadowOffset = CGSize(width: 4, height: 4)
+        userButtom.layer.shadowRadius = 4
+        userButtom.layer.shadowColor = UIColor.black.cgColor
+        userButtom.layer.shadowOpacity = 0.7
         userButtom.translatesAutoresizingMaskIntoConstraints = false
         return userButtom
     }()
@@ -52,6 +63,9 @@ class ProfileHeaderView: UIView {
         userText.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         userText.textColor = .black
         userText.addTarget(self, action: #selector(changedStatus), for: .editingChanged)
+        userText.layer.cornerRadius = 12
+        userText.layer.borderColor = UIColor.black.cgColor
+        userText.layer.borderWidth = 1
         userText.translatesAutoresizingMaskIntoConstraints = false
         return userText
     }()
@@ -73,25 +87,25 @@ class ProfileHeaderView: UIView {
         
         NSLayoutConstraint.activate([
             // userAvatar
-            userAvatar.topAnchor.constraint(equalTo: topAnchor, constant: 32),
+            userAvatar.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             userAvatar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            userAvatar.widthAnchor.constraint(equalToConstant: 150),
-            userAvatar.heightAnchor.constraint(equalToConstant: 150),
+            userAvatar.widthAnchor.constraint(equalToConstant: 96),
+            userAvatar.heightAnchor.constraint(equalToConstant: 96),
             
             // userName
             userName.topAnchor.constraint(equalTo: topAnchor, constant: 27),
             userName.leadingAnchor.constraint(equalTo: userAvatar.trailingAnchor, constant: 16),
             userName.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            userName.heightAnchor.constraint(equalToConstant: 50),
+            userName.heightAnchor.constraint(equalToConstant: 27),
             
             // user Phrase
-            userPhrase.topAnchor.constraint(equalTo: userName.centerYAnchor, constant: 16),
+            userPhrase.topAnchor.constraint(equalTo: userName.bottomAnchor, constant: 16),
             userPhrase.leadingAnchor.constraint(equalTo: userAvatar.trailingAnchor, constant: 16),
             userPhrase.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            userPhrase.heightAnchor.constraint(equalToConstant: 70),
+            userPhrase.heightAnchor.constraint(equalToConstant: 27),
             
             // userButton
-            userButtom.topAnchor.constraint(equalTo: userAvatar.bottomAnchor, constant: 32),
+            userButtom.topAnchor.constraint(equalTo: userAvatar.bottomAnchor, constant: 44),
             userButtom.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             userButtom.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             userButtom.heightAnchor.constraint(equalToConstant: 50),
@@ -101,24 +115,7 @@ class ProfileHeaderView: UIView {
             userText.leadingAnchor.constraint(equalTo: userPhrase.leadingAnchor),
             userText.trailingAnchor.constraint(equalTo: userPhrase.trailingAnchor),
             userText.heightAnchor.constraint(equalToConstant: 40)
-        ])
-        
-        userAvatar.layer.cornerRadius = 75
-        userAvatar.clipsToBounds = true
-        userAvatar.layer.borderColor = UIColor.white.cgColor
-        userAvatar.layer.borderWidth = 3
-        
-        userText.layer.cornerRadius = 12
-        userText.layer.borderColor = UIColor.black.cgColor
-        userText.layer.borderWidth = 1
-        
-        userButtom.layer.cornerRadius = 4
-        userButtom.clipsToBounds = true
-        userButtom.layer.masksToBounds = false
-        userButtom.layer.shadowOffset = CGSize(width: 4, height: 4)
-        userButtom.layer.shadowRadius = 4
-        userButtom.layer.shadowColor = UIColor.black.cgColor
-        userButtom.layer.shadowOpacity = 0.7
+        ]) 
     }
     
     @objc func showStatus() {
