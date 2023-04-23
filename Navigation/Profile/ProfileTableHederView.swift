@@ -1,8 +1,8 @@
 //
-//  ProfileHeaderView.swift
+//  ProfileTableHederView.swift
 //  Navigation
 //
-//  Created by Alex Shkunov on 4/16/23.
+//  Created by Alex Shkunov on 4/23/23.
 //
 
 import UIKit
@@ -57,8 +57,8 @@ class ProfileHeaderView: UIView {
         return userButtom
     }()
     
-    private lazy var userText: UITextField = {
-        let userText = UITextField()
+    private lazy var userText: TextFieldWithPadding = {
+        let userText = TextFieldWithPadding()
         userText.backgroundColor = .white
         userText.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         userText.textColor = .black
@@ -66,6 +66,7 @@ class ProfileHeaderView: UIView {
         userText.layer.cornerRadius = 12
         userText.layer.borderColor = UIColor.black.cgColor
         userText.layer.borderWidth = 1
+        userText.placeholder = "Type your status"
         userText.translatesAutoresizingMaskIntoConstraints = false
         return userText
     }()
@@ -74,6 +75,7 @@ class ProfileHeaderView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .systemGray6
         layout()
         showStatus()
     }
@@ -120,7 +122,7 @@ class ProfileHeaderView: UIView {
             userText.leadingAnchor.constraint(equalTo: userPhrase.leadingAnchor),
             userText.trailingAnchor.constraint(equalTo: userPhrase.trailingAnchor),
             userText.heightAnchor.constraint(equalToConstant: 40)
-        ]) 
+        ])
     }
     
     @objc func showStatus() {

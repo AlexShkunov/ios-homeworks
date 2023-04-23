@@ -33,24 +33,31 @@ class LogInViewController: UIViewController {
         return logoView
     }()
     
-    private let loginAndPassword: UIView = {
+    private let separation: UIView = {
         let view = UIView()
-        view.backgroundColor = .systemGray6
-        view.layer.borderColor = UIColor.lightGray.cgColor
-        view.layer.borderWidth = 0.5
-        view.layer.cornerRadius = 10
+        view.backgroundColor = .systemGray4
         view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private lazy var loginTextField: UITextField = {
-        let textField = UITextField()
+    private let insertLoginAndPassword: UIStackView = {
+        let stackView = UIStackView()
+        stackView.layer.borderColor = UIColor.lightGray.cgColor
+        stackView.layer.borderWidth = 0.5
+        stackView.layer.cornerRadius = 10
+        stackView.clipsToBounds = true
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    private lazy var loginTextField: TextFieldWithPadding = {
+        let textField = TextFieldWithPadding()
         textField.placeholder = "Email or phone"
         textField.textColor = .black
         textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        textField.layer.borderColor = UIColor.lightGray.cgColor
-        textField.layer.borderWidth = 0.5
         textField.clipsToBounds = true
         textField.autocapitalizationType = .none
         textField.keyboardType = .emailAddress
@@ -60,13 +67,11 @@ class LogInViewController: UIViewController {
         return textField
     }()
     
-    private lazy var passwordTextField: UITextField = {
-        let textField = UITextField()
+    private lazy var passwordTextField: TextFieldWithPadding = {
+        let textField = TextFieldWithPadding()
         textField.placeholder = "Password"
         textField.textColor = .black
         textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        textField.layer.borderColor = UIColor.lightGray.cgColor
-        textField.layer.borderWidth = 0.5
         textField.clipsToBounds = true
         textField.autocapitalizationType = .none
         textField.textContentType = .password
@@ -145,9 +150,7 @@ class LogInViewController: UIViewController {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.addSubview(logoView)
-        contentView.addSubview(loginAndPassword)
-        loginAndPassword.addSubview(loginTextField)
-        loginAndPassword.addSubview(passwordTextField)
+        contentView.addSubview(insertLoginAndPassword)
         contentView.addSubview(logInButtom)
         
         NSLayoutConstraint.activate([
@@ -170,31 +173,26 @@ class LogInViewController: UIViewController {
             logoView.heightAnchor.constraint(equalToConstant: 100),
             logoView.widthAnchor.constraint(equalToConstant: 100),
             
-            // loginAndPassword
-            loginAndPassword.topAnchor.constraint(equalTo: logoView.bottomAnchor, constant: 120),
-            loginAndPassword.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            loginAndPassword.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            loginAndPassword.heightAnchor.constraint(equalToConstant: 100),
+            // insertLoginAndPassword
+            insertLoginAndPassword.topAnchor.constraint(equalTo: logoView.bottomAnchor, constant: 120),
+            insertLoginAndPassword.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            insertLoginAndPassword.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            insertLoginAndPassword.heightAnchor.constraint(equalToConstant: 100),
             
-            // loginTextField
-            loginTextField.topAnchor.constraint(equalTo: loginAndPassword.topAnchor),
-            loginTextField.leadingAnchor.constraint(equalTo: loginAndPassword.leadingAnchor),
-            loginTextField.trailingAnchor.constraint(equalTo: loginAndPassword.trailingAnchor),
             loginTextField.heightAnchor.constraint(equalToConstant: 50),
-            
-            // passwordTextField
-            passwordTextField.topAnchor.constraint(equalTo: loginTextField.bottomAnchor),
-            passwordTextField.leadingAnchor.constraint(equalTo: loginAndPassword.leadingAnchor),
-            passwordTextField.trailingAnchor.constraint(equalTo: loginAndPassword.trailingAnchor),
-            passwordTextField.heightAnchor.constraint(equalToConstant: 50),
+            separation.heightAnchor.constraint(equalToConstant: 0.5),
             
             // logInButtom
-            logInButtom.topAnchor.constraint(equalTo: loginAndPassword.bottomAnchor, constant: 16),
+            logInButtom.topAnchor.constraint(equalTo: insertLoginAndPassword.bottomAnchor, constant: 16),
             logInButtom.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             logInButtom.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             logInButtom.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             logInButtom.heightAnchor.constraint(equalToConstant: 50)
         ])
+        
+        insertLoginAndPassword.addArrangedSubview(loginTextField)
+        insertLoginAndPassword.addArrangedSubview(separation)
+        insertLoginAndPassword.addArrangedSubview(passwordTextField)
     }
 }
 
