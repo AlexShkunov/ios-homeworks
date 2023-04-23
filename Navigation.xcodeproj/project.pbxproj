@@ -17,6 +17,7 @@
 		FAB3DFC629EC511E005AA735 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB3DFC529EC511E005AA735 /* InfoViewController.swift */; };
 		FAB3DFC829EC516F005AA735 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB3DFC729EC516F005AA735 /* Post.swift */; };
 		FAB3DFCA29EC5612005AA735 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB3DFC929EC5612005AA735 /* ProfileHeaderView.swift */; };
+		FAD9474C29F1C3AE00CB58F0 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD9474B29F1C3AE00CB58F0 /* LogInViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		FAB3DFC529EC511E005AA735 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		FAB3DFC729EC516F005AA735 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		FAB3DFC929EC5612005AA735 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
+		FAD9474B29F1C3AE00CB58F0 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 			children = (
 				FAB3DFC129EC50EE005AA735 /* ProfileViewControlle.swift */,
 				FAB3DFC929EC5612005AA735 /* ProfileHeaderView.swift */,
+				FAD9474B29F1C3AE00CB58F0 /* LogInViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -159,6 +162,7 @@
 			files = (
 				FAB3DFAC29EC4E7F005AA735 /* AppDelegate.swift in Sources */,
 				FAB3DFC029EC50DB005AA735 /* FeedViewController.swift in Sources */,
+				FAD9474C29F1C3AE00CB58F0 /* LogInViewController.swift in Sources */,
 				FAB3DFAE29EC4E7F005AA735 /* SceneDelegate.swift in Sources */,
 				FAB3DFC229EC50EE005AA735 /* ProfileViewControlle.swift in Sources */,
 				FAB3DFC629EC511E005AA735 /* InfoViewController.swift in Sources */,

@@ -72,10 +72,14 @@ class ProfileHeaderView: UIView {
     
     private var statusText: String?
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         layout()
         showStatus()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func layout() {
@@ -109,6 +113,7 @@ class ProfileHeaderView: UIView {
             userButtom.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             userButtom.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             userButtom.heightAnchor.constraint(equalToConstant: 50),
+            userButtom.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
             
             // userText
             userText.topAnchor.constraint(equalTo: userPhrase.bottomAnchor, constant: 10),
