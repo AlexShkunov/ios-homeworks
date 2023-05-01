@@ -91,44 +91,48 @@ class PhotosTableViewCell: UITableViewCell {
     private func layout() {
         [titleOfPhotos,arrow, firstImage, secondImage, thirdImage, fourthImage].forEach { contentView.addSubview($0) }
         
-        let viewInset: CGFloat = 12
-        let imageInset: CGFloat = 8
-        let screenRect = UIScreen.main.bounds
-        let screenWidth = (screenRect.size.width - 48) / 4
-        
         NSLayoutConstraint.activate([
             // titleOfPhotos
-            titleOfPhotos.topAnchor.constraint(equalTo: contentView.topAnchor, constant: viewInset),
-            titleOfPhotos.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: viewInset),
+            titleOfPhotos.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Metric.viewInset),
+            titleOfPhotos.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Metric.viewInset),
             
             // arrow
             arrow.centerYAnchor.constraint(equalTo: titleOfPhotos.centerYAnchor),
-            arrow.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -viewInset),
+            arrow.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Metric.viewInset),
             
             // firstImage
-            firstImage.topAnchor.constraint(equalTo: titleOfPhotos.bottomAnchor, constant: viewInset),
-            firstImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: viewInset),
-            firstImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -viewInset),
-            firstImage.widthAnchor.constraint(equalToConstant: screenWidth),
-            firstImage.heightAnchor.constraint(equalToConstant: screenWidth),
+            firstImage.topAnchor.constraint(equalTo: titleOfPhotos.bottomAnchor, constant: Metric.viewInset),
+            firstImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Metric.viewInset),
+            firstImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Metric.viewInset),
+            firstImage.widthAnchor.constraint(equalToConstant: Metric.screenWidth),
+            firstImage.heightAnchor.constraint(equalToConstant: Metric.screenWidth),
             
             // secondImage
             secondImage.topAnchor.constraint(equalTo: firstImage.topAnchor),
-            secondImage.leadingAnchor.constraint(equalTo: firstImage.trailingAnchor, constant: imageInset),
-            secondImage.widthAnchor.constraint(equalToConstant: screenWidth),
+            secondImage.leadingAnchor.constraint(equalTo: firstImage.trailingAnchor, constant: Metric.imageInset),
+            secondImage.widthAnchor.constraint(equalToConstant: Metric.screenWidth),
             secondImage.bottomAnchor.constraint(equalTo: firstImage.bottomAnchor),
             
             // thirdImage
             thirdImage.topAnchor.constraint(equalTo: secondImage.topAnchor),
-            thirdImage.leadingAnchor.constraint(equalTo: secondImage.trailingAnchor, constant: imageInset),
-            thirdImage.widthAnchor.constraint(equalToConstant: screenWidth),
+            thirdImage.leadingAnchor.constraint(equalTo: secondImage.trailingAnchor, constant: Metric.imageInset),
+            thirdImage.widthAnchor.constraint(equalToConstant: Metric.screenWidth),
             thirdImage.bottomAnchor.constraint(equalTo: secondImage.bottomAnchor),
             
             // fourthImage
             fourthImage.topAnchor.constraint(equalTo: thirdImage.topAnchor),
-            fourthImage.leadingAnchor.constraint(equalTo: thirdImage.trailingAnchor, constant: imageInset),
-            fourthImage.widthAnchor.constraint(equalToConstant: screenWidth),
+            fourthImage.leadingAnchor.constraint(equalTo: thirdImage.trailingAnchor, constant: Metric.imageInset),
+            fourthImage.widthAnchor.constraint(equalToConstant: Metric.screenWidth),
             fourthImage.bottomAnchor.constraint(equalTo: thirdImage.bottomAnchor)
         ])
+    }
+}
+
+extension PhotosTableViewCell {
+    enum Metric {
+        static let viewInset: CGFloat = 12
+        static let imageInset: CGFloat = 8
+        static let screenRect = UIScreen.main.bounds
+        static let screenWidth = (screenRect.size.width - 48) / 4
     }
 }
