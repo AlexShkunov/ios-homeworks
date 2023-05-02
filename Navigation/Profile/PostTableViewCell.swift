@@ -80,36 +80,41 @@ class PostTableViewCell: UITableViewCell {
     private func layout() {
         [authorOfPost, postImageView, postDescription, likesLabel, viewsLabel].forEach { contentView.addSubview($0) }
         
-        let viewInset: CGFloat = 16
         let screenRect = UIScreen.main.bounds
         let screenWidth = screenRect.size.width
         
         NSLayoutConstraint.activate([
             // authorOfPost
-            authorOfPost.topAnchor.constraint(equalTo: contentView.topAnchor, constant: viewInset),
-            authorOfPost.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: viewInset),
-            authorOfPost.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -viewInset),
+            authorOfPost.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Metric.viewInset),
+            authorOfPost.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Metric.viewInset),
+            authorOfPost.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Metric.viewInset),
             
             // postImageView
-            postImageView.topAnchor.constraint(equalTo: authorOfPost.bottomAnchor, constant: viewInset),
+            postImageView.topAnchor.constraint(equalTo: authorOfPost.bottomAnchor, constant: Metric.viewInset),
             postImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             postImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             postImageView.heightAnchor.constraint(equalToConstant: screenWidth),
             
             // postDescription
-            postDescription.topAnchor.constraint(equalTo: postImageView.bottomAnchor, constant: viewInset),
-            postDescription.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: viewInset),
-            postDescription.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -viewInset),
+            postDescription.topAnchor.constraint(equalTo: postImageView.bottomAnchor, constant: Metric.viewInset),
+            postDescription.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Metric.viewInset),
+            postDescription.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Metric.viewInset),
             
             // likesLabel
-            likesLabel.topAnchor.constraint(equalTo: postDescription.bottomAnchor, constant: viewInset),
-            likesLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: viewInset),
-            likesLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -viewInset),
+            likesLabel.topAnchor.constraint(equalTo: postDescription.bottomAnchor, constant: Metric.viewInset),
+            likesLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Metric.viewInset),
+            likesLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Metric.viewInset),
             
             // viewsLabel
             viewsLabel.topAnchor.constraint(equalTo: likesLabel.topAnchor),
-            viewsLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -viewInset),
+            viewsLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Metric.viewInset),
             viewsLabel.bottomAnchor.constraint(equalTo: likesLabel.bottomAnchor)
         ])
+    }
+}
+
+extension PostTableViewCell {
+    enum Metric {
+        static let viewInset: CGFloat = 16
     }
 }

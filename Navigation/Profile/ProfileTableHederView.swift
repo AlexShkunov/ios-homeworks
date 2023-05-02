@@ -67,6 +67,7 @@ class ProfileHeaderView: UIView {
         userText.layer.borderColor = UIColor.black.cgColor
         userText.layer.borderWidth = 1
         userText.placeholder = "Type your status"
+        userText.delegate = self
         userText.translatesAutoresizingMaskIntoConstraints = false
         return userText
     }()
@@ -132,5 +133,12 @@ class ProfileHeaderView: UIView {
     
     @objc func changedStatus(_ textField: UITextField) {
         statusText = textField.text
+    }
+}
+
+extension ProfileHeaderView: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        endEditing(true)
+        return true
     }
 }
