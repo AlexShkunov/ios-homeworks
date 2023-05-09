@@ -20,6 +20,33 @@ class ProfileHeaderView: UIView {
         return userAvatar
     }()
     
+    private let animationViewForUserAvatar: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let backgroundForAnimation: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemYellow
+        view.frame = CGRect(x: .zero, y: .zero, width: Metric.screenWidth, height: Metric.screenHeight)
+        view.isHidden = true
+        view.alpha = 0
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    private lazy var cancelButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "cross"), for: .normal)
+        button.isHidden = true
+        button.alpha = 0
+        button.frame = CGRect(x: Metric.screenMinX + (Metric.screenWidth - Metric.buttonWidth), y: Metric.screenMinY, width: Metric.buttonWidth, height: Metric.buttonWidth)
+        button.addTarget(self, action: #selector(cancelAction), for: .touchUpInside)
+        return button
+    }()
+    
     private let userName: UILabel = {
         let userName = UILabel()
         userName.font = UIFont.systemFont(ofSize: 18, weight: .bold)
@@ -79,44 +106,99 @@ class ProfileHeaderView: UIView {
         backgroundColor = .systemGray6
         layout()
         showStatus()
+        setupGesture()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func setupGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapAction))
+        animationViewForUserAvatar.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func tapAction() {
+        UIView.animateKeyframes(withDuration: 0.8, delay: 0.0) {
+            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.625) {
+                // userAvatar
+                self.userAvatar.center = CGPoint(x: Metric.screenCenterX - Metric.viewInset, y: Metric.screenCenterY - self.animationViewForUserAvatar.bounds.height/2)
+                self.userAvatar.transform = CGAffineTransform(scaleX: UIScreen.main.bounds.width/self.animationViewForUserAvatar.bounds.width, y: UIScreen.main.bounds.width/self.animationViewForUserAvatar.bounds.width)
+                self.userAvatar.layer.cornerRadius = 0
+                
+                // backgroundForAnimation
+                self.backgroundForAnimation.alpha = 0.5
+                self.backgroundForAnimation.isHidden = false
+                self.layoutIfNeeded()
+            }
+            UIView.addKeyframe(withRelativeStartTime: 0.625, relativeDuration: 1.0) {
+                // cancelButton
+                self.cancelButton.alpha = 1
+                self.cancelButton.isHidden = false
+            }
+        }
+    }
+    
+    @objc private func cancelAction() {
+        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0, initialSpringVelocity: 0, options: .curveEaseInOut) {
+            // cancelButton
+            self.cancelButton.alpha = 0
+            self.cancelButton.isHidden = true
+        } completion: { _ in
+            UIView.animate(withDuration: 0.5) {
+                // userAvatar
+                self.userAvatar.center = CGPoint(x: self.animationViewForUserAvatar.bounds.midX, y: self.animationViewForUserAvatar.bounds.midY)
+                self.userAvatar.transform = CGAffineTransform(scaleX: 1, y: 1)
+                self.userAvatar.layer.cornerRadius = 48
+                
+                // backgroundForAnimation
+                self.backgroundForAnimation.alpha = 0
+                self.backgroundForAnimation.isHidden = true
+            }
+        }
+    }
+    
     private func layout() {
-        addSubview(userAvatar)
         addSubview(userName)
         addSubview(userPhrase)
         addSubview(userButtom)
         addSubview(userText)
+        addSubview(backgroundForAnimation)
+        addSubview(animationViewForUserAvatar)
+        animationViewForUserAvatar.addSubview(userAvatar)
+        addSubview(cancelButton)
         
         NSLayoutConstraint.activate([
+            // animationViewForUserAvatar
+            animationViewForUserAvatar.topAnchor.constraint(equalTo: topAnchor, constant: Metric.viewInset),
+            animationViewForUserAvatar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Metric.viewInset),
+            animationViewForUserAvatar.widthAnchor.constraint(equalToConstant: 96),
+            animationViewForUserAvatar.heightAnchor.constraint(equalToConstant: 96),
+            
             // userAvatar
-            userAvatar.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            userAvatar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            userAvatar.widthAnchor.constraint(equalToConstant: 96),
-            userAvatar.heightAnchor.constraint(equalToConstant: 96),
+            userAvatar.topAnchor.constraint(equalTo: animationViewForUserAvatar.topAnchor),
+            userAvatar.leadingAnchor.constraint(equalTo: animationViewForUserAvatar.leadingAnchor),
+            userAvatar.bottomAnchor.constraint(equalTo: animationViewForUserAvatar.bottomAnchor),
+            userAvatar.trailingAnchor.constraint(equalTo: animationViewForUserAvatar.trailingAnchor),
             
             // userName
             userName.topAnchor.constraint(equalTo: topAnchor, constant: 27),
-            userName.leadingAnchor.constraint(equalTo: userAvatar.trailingAnchor, constant: 16),
-            userName.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            userName.leadingAnchor.constraint(equalTo: animationViewForUserAvatar.trailingAnchor, constant: Metric.viewInset),
+            userName.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Metric.viewInset),
             userName.heightAnchor.constraint(equalToConstant: 27),
             
             // user Phrase
-            userPhrase.topAnchor.constraint(equalTo: userName.bottomAnchor, constant: 16),
-            userPhrase.leadingAnchor.constraint(equalTo: userAvatar.trailingAnchor, constant: 16),
-            userPhrase.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            userPhrase.topAnchor.constraint(equalTo: userName.bottomAnchor, constant: Metric.viewInset),
+            userPhrase.leadingAnchor.constraint(equalTo: animationViewForUserAvatar.trailingAnchor, constant: Metric.viewInset),
+            userPhrase.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Metric.viewInset),
             userPhrase.heightAnchor.constraint(equalToConstant: 27),
             
             // userButton
-            userButtom.topAnchor.constraint(equalTo: userAvatar.bottomAnchor, constant: 44),
-            userButtom.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            userButtom.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            userButtom.topAnchor.constraint(equalTo: animationViewForUserAvatar.bottomAnchor, constant: 44),
+            userButtom.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Metric.viewInset),
+            userButtom.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Metric.viewInset),
             userButtom.heightAnchor.constraint(equalToConstant: 50),
-            userButtom.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
+            userButtom.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Metric.viewInset),
             
             // userText
             userText.topAnchor.constraint(equalTo: userPhrase.bottomAnchor, constant: 10),
@@ -140,5 +222,19 @@ extension ProfileHeaderView: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         endEditing(true)
         return true
+    }
+}
+
+extension ProfileHeaderView {
+    enum Metric {
+        static let viewInset: CGFloat = 16
+        static let screenRect = UIScreen.main.bounds
+        static let screenWidth = screenRect.size.width
+        static let screenHeight = screenRect.size.height
+        static let screenCenterX = screenRect.midX
+        static let screenCenterY = screenRect.midY
+        static let screenMinX = screenRect.minX
+        static let screenMinY = screenRect.minY
+        static let buttonWidth = screenRect.size.width / 10
     }
 }
