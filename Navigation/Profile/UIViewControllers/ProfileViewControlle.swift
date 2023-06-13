@@ -9,7 +9,7 @@ import UIKit
 
 class ProfileViewControlle: UIViewController {
     
-    private let postForProfile = PostForProfile.makePostForProfile()
+    private var postForProfile = PostForProfile.makePostForProfile()
     private let imageForPhotosTableView = SettingsForPhotosTableView.makeImageForPhotos()
     
     private lazy var postTableView: UITableView = {
@@ -66,8 +66,16 @@ extension ProfileViewControlle: UITableViewDataSource {
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell
             cell.setupCell(post: postForProfile[indexPath.row])
+            cell.likesTapAction = { [weak self] in
+                self?.plusLikes(for: indexPath)
+                tableView.reloadData()
+            }
             return cell
         }
+    }
+    
+    func plusLikes(for indexPath: IndexPath) {
+        postForProfile[indexPath.row].likes += 1
     }
 }
 
@@ -85,6 +93,25 @@ extension ProfileViewControlle: UITableViewDelegate {
         if indexPath.section == 0 {
             let detailVC = PhotosViewController()
             navigationController?.pushViewController(detailVC, animated: true)
+        } else {
+            var views = postForProfile[indexPath.row]
+            views.views += 1
+            postForProfile[indexPath.row] = views
+            tableView.reloadData()
+            let detailVC = DetailViewController()
+            detailVC.setupVC(post: postForProfile[indexPath.row])
+            present(detailVC, animated: true)
         }
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            postForProfile.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return indexPath.section != 0
     }
 }
