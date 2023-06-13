@@ -9,6 +9,8 @@ import UIKit
 
 class PostTableViewCell: UITableViewCell {
     
+    var likesTapAction: (() -> Void)?
+    
     private let authorOfPost: UILabel = {
         let label = UILabel()
         label.numberOfLines = 2
@@ -54,6 +56,7 @@ class PostTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         layout()
+        setupGesture()
     }
     
     required init?(coder: NSCoder) {
@@ -69,6 +72,10 @@ class PostTableViewCell: UITableViewCell {
         viewsLabel.text = nil
     }
     
+    @objc func labelTapped() {
+        likesTapAction?()
+    }
+    
     func setupCell(post: PostForProfile) {
         authorOfPost.text = post.author
         postImageView.image = post.image
@@ -77,11 +84,14 @@ class PostTableViewCell: UITableViewCell {
         viewsLabel.text = "Views: \(String(post.views))"
     }
     
+    private func setupGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(labelTapped))
+        likesLabel.isUserInteractionEnabled = true
+        likesLabel.addGestureRecognizer(tapGesture)
+    }
+    
     private func layout() {
         [authorOfPost, postImageView, postDescription, likesLabel, viewsLabel].forEach { contentView.addSubview($0) }
-        
-        let screenRect = UIScreen.main.bounds
-        let screenWidth = screenRect.size.width
         
         NSLayoutConstraint.activate([
             // authorOfPost
@@ -93,7 +103,7 @@ class PostTableViewCell: UITableViewCell {
             postImageView.topAnchor.constraint(equalTo: authorOfPost.bottomAnchor, constant: Metric.viewInset),
             postImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             postImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            postImageView.heightAnchor.constraint(equalToConstant: screenWidth),
+            postImageView.heightAnchor.constraint(equalToConstant: Metric.screenWidth),
             
             // postDescription
             postDescription.topAnchor.constraint(equalTo: postImageView.bottomAnchor, constant: Metric.viewInset),
@@ -116,5 +126,7 @@ class PostTableViewCell: UITableViewCell {
 extension PostTableViewCell {
     enum Metric {
         static let viewInset: CGFloat = 16
+        static let screenRect = UIScreen.main.bounds
+        static let screenWidth = screenRect.size.width
     }
 }

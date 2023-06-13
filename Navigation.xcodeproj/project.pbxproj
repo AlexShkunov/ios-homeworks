@@ -24,6 +24,7 @@
 		FAB98F9729FD4BE100038E7B /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB98F9629FD4BE100038E7B /* PhotosViewController.swift */; };
 		FAB98F9929FD576300038E7B /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB98F9829FD576300038E7B /* PhotosCollectionViewCell.swift */; };
 		FAB98F9B29FD591F00038E7B /* ModelsForCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB98F9A29FD591F00038E7B /* ModelsForCollectionView.swift */; };
+		FAB9A6892A3778D1001FC06C /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB9A6882A3778D1001FC06C /* DetailViewController.swift */; };
 		FAD9474C29F1C3AE00CB58F0 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD9474B29F1C3AE00CB58F0 /* LogInViewController.swift */; };
 		FAE7F26729F567CD000E473D /* ProfileTableHederView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE7F26629F567CD000E473D /* ProfileTableHederView.swift */; };
 		FAEC4C4B29F59F21002C4200 /* TextFieldWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEC4C4A29F59F21002C4200 /* TextFieldWithPadding.swift */; };
@@ -49,6 +50,7 @@
 		FAB98F9629FD4BE100038E7B /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		FAB98F9829FD576300038E7B /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		FAB98F9A29FD591F00038E7B /* ModelsForCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelsForCollectionView.swift; sourceTree = "<group>"; };
+		FAB9A6882A3778D1001FC06C /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		FAD9474B29F1C3AE00CB58F0 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		FAE7F26629F567CD000E473D /* ProfileTableHederView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableHederView.swift; sourceTree = "<group>"; };
 		FAEC4C4A29F59F21002C4200 /* TextFieldWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldWithPadding.swift; sourceTree = "<group>"; };
@@ -87,15 +89,8 @@
 				FAB3DFAB29EC4E7F005AA735 /* AppDelegate.swift */,
 				FAB3DFAD29EC4E7F005AA735 /* SceneDelegate.swift */,
 				FAB3DFCB29EC561D005AA735 /* Profile */,
-				FAB3DFBF29EC50DB005AA735 /* FeedViewController.swift */,
-				FAB3DFC329EC5103005AA735 /* PostViewController.swift */,
-				FAB3DFC529EC511E005AA735 /* InfoViewController.swift */,
-				FAB3DFC729EC516F005AA735 /* Post.swift */,
-				FA1D7A9929F550DB0045B127 /* PostForUITableView.swift */,
-				FAB98F9429FD3E2B00038E7B /* SettingsForPhotosTableView.swift */,
-				FAB98F9A29FD591F00038E7B /* ModelsForCollectionView.swift */,
-				FA56837029F5875D00B08FD4 /* ExtensionForUIView.swift */,
-				FAEC4C4A29F59F21002C4200 /* TextFieldWithPadding.swift */,
+				FAB9A68A2A38D534001FC06C /* Feed */,
+				FAB9A68B2A38D550001FC06C /* Addition */,
 				FAB3DFB429EC4E7F005AA735 /* Assets.xcassets */,
 				FAB3DFB629EC4E7F005AA735 /* LaunchScreen.storyboard */,
 				FAB3DFB929EC4E7F005AA735 /* Info.plist */,
@@ -106,15 +101,63 @@
 		FAB3DFCB29EC561D005AA735 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				FAB3DFC129EC50EE005AA735 /* ProfileViewControlle.swift */,
+				FAB9A68D2A38D5F6001FC06C /* UIViewControllers */,
+				FAB9A68E2A38D699001FC06C /* TableAndCollectionSetup */,
+				FAB9A68C2A38D5EB001FC06C /* Models */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		FAB9A68A2A38D534001FC06C /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				FAB3DFC529EC511E005AA735 /* InfoViewController.swift */,
+				FAB3DFC329EC5103005AA735 /* PostViewController.swift */,
+				FAB3DFBF29EC50DB005AA735 /* FeedViewController.swift */,
+			);
+			path = Feed;
+			sourceTree = "<group>";
+		};
+		FAB9A68B2A38D550001FC06C /* Addition */ = {
+			isa = PBXGroup;
+			children = (
+				FA56837029F5875D00B08FD4 /* ExtensionForUIView.swift */,
+				FAB3DFC729EC516F005AA735 /* Post.swift */,
+				FAEC4C4A29F59F21002C4200 /* TextFieldWithPadding.swift */,
+			);
+			path = Addition;
+			sourceTree = "<group>";
+		};
+		FAB9A68C2A38D5EB001FC06C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FAB98F9429FD3E2B00038E7B /* SettingsForPhotosTableView.swift */,
+				FA1D7A9929F550DB0045B127 /* PostForUITableView.swift */,
+				FAB98F9A29FD591F00038E7B /* ModelsForCollectionView.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		FAB9A68D2A38D5F6001FC06C /* UIViewControllers */ = {
+			isa = PBXGroup;
+			children = (
 				FAD9474B29F1C3AE00CB58F0 /* LogInViewController.swift */,
+				FAB3DFC129EC50EE005AA735 /* ProfileViewControlle.swift */,
+				FAB98F9629FD4BE100038E7B /* PhotosViewController.swift */,
+				FAB9A6882A3778D1001FC06C /* DetailViewController.swift */,
+			);
+			path = UIViewControllers;
+			sourceTree = "<group>";
+		};
+		FAB9A68E2A38D699001FC06C /* TableAndCollectionSetup */ = {
+			isa = PBXGroup;
+			children = (
 				FAE7F26629F567CD000E473D /* ProfileTableHederView.swift */,
 				FA0E2BBF29F574020071835B /* PostTableViewCell.swift */,
 				FAB98F9229FD24E400038E7B /* PhotosTableViewCell.swift */,
-				FAB98F9629FD4BE100038E7B /* PhotosViewController.swift */,
 				FAB98F9829FD576300038E7B /* PhotosCollectionViewCell.swift */,
 			);
-			path = Profile;
+			path = TableAndCollectionSetup;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -197,6 +240,7 @@
 				FA56837129F5875D00B08FD4 /* ExtensionForUIView.swift in Sources */,
 				FAD9474C29F1C3AE00CB58F0 /* LogInViewController.swift in Sources */,
 				FAB3DFAE29EC4E7F005AA735 /* SceneDelegate.swift in Sources */,
+				FAB9A6892A3778D1001FC06C /* DetailViewController.swift in Sources */,
 				FAB98F9329FD24E400038E7B /* PhotosTableViewCell.swift in Sources */,
 				FAB3DFC229EC50EE005AA735 /* ProfileViewControlle.swift in Sources */,
 				FAB3DFC629EC511E005AA735 /* InfoViewController.swift in Sources */,

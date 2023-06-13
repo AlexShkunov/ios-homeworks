@@ -9,6 +9,8 @@ import UIKit
 
 class ProfileHeaderView: UIView {
     
+    private var statusText: String?
+    
     private let userAvatar: UIImageView = {
         let image = UIImage(named: "profilePhoto")
         let userAvatar = UIImageView(image: image)
@@ -18,33 +20,6 @@ class ProfileHeaderView: UIView {
         userAvatar.layer.borderWidth = 3
         userAvatar.translatesAutoresizingMaskIntoConstraints = false
         return userAvatar
-    }()
-    
-    private let animationViewForUserAvatar: UIView = {
-        let view = UIView()
-        view.backgroundColor = .clear
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private let backgroundForAnimation: UIView = {
-        let view = UIView()
-        view.backgroundColor = .systemYellow
-        view.frame = CGRect(x: .zero, y: .zero, width: Metric.screenWidth, height: Metric.screenHeight)
-        view.isHidden = true
-        view.alpha = 0
-        view.backgroundColor = .white
-        return view
-    }()
-    
-    private lazy var cancelButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "cross"), for: .normal)
-        button.isHidden = true
-        button.alpha = 0
-        button.frame = CGRect(x: Metric.screenMinX + (Metric.screenWidth - Metric.buttonWidth), y: Metric.screenMinY, width: Metric.buttonWidth, height: Metric.buttonWidth)
-        button.addTarget(self, action: #selector(cancelAction), for: .touchUpInside)
-        return button
     }()
     
     private let userName: UILabel = {
@@ -61,7 +36,7 @@ class ProfileHeaderView: UIView {
         var userPhrase = UILabel()
         userPhrase.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         userPhrase.textColor = .gray
-        userPhrase.text = "Not all treasure is silver and gold, mate."
+        userPhrase.text = "All hands on deck"
         userPhrase.numberOfLines = 0
         userPhrase.translatesAutoresizingMaskIntoConstraints = false
         return userPhrase
@@ -99,23 +74,42 @@ class ProfileHeaderView: UIView {
         return userText
     }()
     
-    private var statusText: String?
+    private let animationViewForUserAvatar: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let backgroundForAnimation: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemYellow
+        view.frame = CGRect(x: .zero, y: .zero, width: Metric.screenWidth, height: Metric.screenHeight)
+        view.isHidden = true
+        view.alpha = 0
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    private lazy var cancelButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        button.isHidden = true
+        button.alpha = 0
+        button.frame = CGRect(x: Metric.screenMinX + (Metric.screenWidth - Metric.buttonWidth), y: Metric.screenMinY, width: Metric.buttonWidth, height: Metric.buttonWidth)
+        button.addTarget(self, action: #selector(cancelAction), for: .touchUpInside)
+        return button
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .systemGray6
         layout()
-        showStatus()
         setupGesture()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupGesture() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapAction))
-        animationViewForUserAvatar.addGestureRecognizer(tapGesture)
     }
     
     @objc private func tapAction() {
@@ -158,6 +152,37 @@ class ProfileHeaderView: UIView {
         }
     }
     
+    @objc func showStatus() {
+        if userText.text?.isEmpty ?? true {
+            shakeAnimationForUserText()
+            userText.attributedPlaceholder = NSAttributedString(string: "Type your status", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemRed])
+            print("Status was not set")
+        } else {
+            userPhrase.text = statusText
+            print(userPhrase.text!)
+        }
+    }
+    
+    @objc func changedStatus(_ textField: UITextField) {
+        statusText = textField.text
+    }
+    
+    private func setupGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapAction))
+        animationViewForUserAvatar.addGestureRecognizer(tapGesture)
+    }
+    
+    private func shakeAnimationForUserText() {
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.1
+        animation.repeatCount = 2
+        animation.autoreverses = true
+        animation.fromValue = NSValue(cgPoint: CGPoint(x: userText.center.x - 10, y: userText.center.y))
+        animation.toValue = NSValue(cgPoint: CGPoint(x: userText.center.x + 10, y: userText.center.y))
+        
+        userText.layer.add(animation, forKey: "position")
+    }
+    
     private func layout() {
         addSubview(userName)
         addSubview(userPhrase)
@@ -185,13 +210,11 @@ class ProfileHeaderView: UIView {
             userName.topAnchor.constraint(equalTo: topAnchor, constant: 27),
             userName.leadingAnchor.constraint(equalTo: animationViewForUserAvatar.trailingAnchor, constant: Metric.viewInset),
             userName.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Metric.viewInset),
-            userName.heightAnchor.constraint(equalToConstant: 27),
             
-            // user Phrase
+            // userPhrase
             userPhrase.topAnchor.constraint(equalTo: userName.bottomAnchor, constant: Metric.viewInset),
             userPhrase.leadingAnchor.constraint(equalTo: animationViewForUserAvatar.trailingAnchor, constant: Metric.viewInset),
             userPhrase.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Metric.viewInset),
-            userPhrase.heightAnchor.constraint(equalToConstant: 27),
             
             // userButton
             userButtom.topAnchor.constraint(equalTo: animationViewForUserAvatar.bottomAnchor, constant: 44),
@@ -206,15 +229,6 @@ class ProfileHeaderView: UIView {
             userText.trailingAnchor.constraint(equalTo: userPhrase.trailingAnchor),
             userText.heightAnchor.constraint(equalToConstant: 40)
         ])
-    }
-    
-    @objc func showStatus() {
-        userPhrase.text = statusText
-        print(userPhrase.text ?? "Status was not set")
-    }
-    
-    @objc func changedStatus(_ textField: UITextField) {
-        statusText = textField.text
     }
 }
 
