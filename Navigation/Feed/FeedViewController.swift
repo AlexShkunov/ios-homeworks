@@ -50,6 +50,12 @@ class FeedViewController: UIViewController {
         layoutStackView()
     }
     
+    @objc func showDetails() {
+        let postViewController = PostViewController()
+        navigationController?.pushViewController(postViewController, animated: true)
+        postViewController.titlePost = post.title
+    }
+    
     private func layoutStackView() {
         view.addSubview(stackView)
         stackView.addArrangedSubview(button1)
@@ -59,12 +65,5 @@ class FeedViewController: UIViewController {
             stackView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             stackView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
         ])
-    }
-    
-    @objc func showDetails() {
-        let postViewController = PostViewController()
-        navigationController?.pushViewController(postViewController, animated: true)
-        postViewController.titlePost = post.title
-        
     }
 }
